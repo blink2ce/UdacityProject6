@@ -902,8 +902,6 @@ $(function() {
             //Need to make an instance of app.js variable. 
          });
 
-         //spyOn(**app.js variable**, 'menuIcon.on')
-
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
@@ -911,9 +909,6 @@ $(function() {
          */
          it('The menu element is hidden by default', function() {
             expect($('body')).toHaveClass("menu-hidden");
-            $(".icon-list").click();
-            expect($('body')).not.toHaveClass("menu-hidden");
-            $(".icon-list").click();
          })
 
          /* TODO: Write a test that ensures the menu changes
@@ -922,12 +917,11 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
           it('changes visibility when the menu icon is clicked', function() {
-            /*$('.icon-list').click();
-            //need to see if the menuIcon.on function ran
-            expect(**app.js variable**.menuIcon.on).toHaveBeenCalled();
-            $('.icon-list').click();
-            expect(**app.js variable**.menuIcon.on).toHaveBeenCalled();
-            */
+            $(".icon-list").click();
+            expect($('body')).not.toHaveClass("menu-hidden");
+            $(".icon-list").click();
+            expect($('body')).toHaveClass("menu-hidden");
+            
           })
     });
 
@@ -939,16 +933,16 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test wil require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-         /*beforeEach(function(done) {
-            loadFeed(function() {
-                done();
+         beforeEach(function(done) {
+            loadFeed(function() { done();
             });
          });
 
          it('should have at least one entry in the feed', function(done) {
-            expect(container.entriesLen > 1).toBeTruthy();
-            done();
-         })*/
+            //Look at html for at least one child in the div with class "feed"
+            expect(foo.container.length > 0).toBeTruthy;
+
+         })
     });
 
     /* TODO: Write a new test suite named "New Feed Selection"*/
