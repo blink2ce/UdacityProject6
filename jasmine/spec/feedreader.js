@@ -852,6 +852,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 }));
 
+
+
 $(function() {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -865,22 +867,21 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
-        it('are defined', function() {
+        it('is defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
-
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-         it('have URLs and they are defined', function(){
+         it('have URLs and they are defined', function() {
             for(var i = 0; i < allFeeds.length; i++){
-                expect(allFeeds[i].url.toBeDefined);
-                expect(allFeeds[i].url.toBeTruthy);
+                expect(allFeeds[i].url).toBeDefined();
+                expect(allFeeds[i].url).toBeTruthy();
             }
-         });
+         })
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
@@ -888,8 +889,8 @@ $(function() {
          */
          it('have names and they are defined', function(){
            for(var i = 0; i < allFeeds.length; i++){
-                expect(allFeeds[i].name.toBeDefined);
-                expect(allFeeds[i].name.toBeTruthy);
+                expect(allFeeds[i].name).toBeDefined();
+                expect(allFeeds[i].name).toBeTruthy();
            } 
          })
     });
@@ -897,10 +898,6 @@ $(function() {
 
     /* TODO: Write a new test suite named "The menu" */
     describe('The Menu', function() {
-        
-        beforeEach(function() {
-            //Need to make an instance of app.js variable. 
-         });
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -934,22 +931,41 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
          beforeEach(function(done) {
-            loadFeed(function() { done();
-            });
+            loadFeed(0); 
+            done();
          });
 
          it('should have at least one entry in the feed', function(done) {
             //Look at html for at least one child in the div with class "feed"
-            expect(foo.container.length > 0).toBeTruthy;
-
-         })
+            expect($('.entry')).not.toBe(null)
+            done();
+         });
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection"*/
+    // TODO: Write a new test suite named "New Feed Selection"
     describe("New Feed Selection", function() {
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-    }) ;
+        // TODO: Write a test that ensures when a new feed is loaded
+        // by the loadFeed function that the content actually changes.
+        // Remember, loadFeed() is asynchronous.
+
+        entriesBefore = 'a';
+        entriesAfter = 'a';
+
+        beforeEach(function(done) {
+          $('.feed').empty();
+          loadFeed(0, function() {
+            entriesBefore = $('.feed').find("h2").text();
+          });
+          loadFeed(1, function() {
+            entriesAfter = $('.feed').find("h2").text();
+            done();
+          });
+        });
+
+        it('Content in feed actually changes', function(done) {
+            //Look at html for at least one child in the div with class "feed"
+            expect(entriesBefore).not.toEqual(entriesAfter);
+            done();
+        });
+    });
 }());
