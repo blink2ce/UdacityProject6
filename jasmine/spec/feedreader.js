@@ -4,12 +4,6 @@
  * all of the tests that will be run against your application.
  */
 
-/* We're placing all of our tests within the $() function,
- * since some of these tests may require DOM elements. We want
- * to ensure they don't run until the DOM is ready.
- */
-
-
 /*!
 Jasmine-jQuery: a set of jQuery helpers for Jasmine tests.
 
@@ -853,7 +847,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }));
 
 
-
+/* SPEC RUNNER */
 $(function() {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -948,9 +942,11 @@ $(function() {
         // by the loadFeed function that the content actually changes.
         // Remember, loadFeed() is asynchronous.
 
+        //Initialize these variables so they are available in the outer scope
         entriesBefore = 'a';
         entriesAfter = 'a';
 
+        //Empty the feed and then load two different feeds into different vairables
         beforeEach(function(done) {
           $('.feed').empty();
           loadFeed(0, function() {
